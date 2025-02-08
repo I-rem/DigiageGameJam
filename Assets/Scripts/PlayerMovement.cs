@@ -24,6 +24,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
+    [SerializeField] private LayerMask waterLayer;
+    
+    public float stepRate = 0.5f;
+    public float stepCoolDown;
 
     private void Update()
     {
@@ -33,12 +37,16 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
             jumpCount++;
+            if ((IsGrounded() && !IsSwimming()) || (!IsSwimming() && IsWalled()))
+                FindObjectOfType<AudioManager>().OneShot("Jump");
         }
 
         if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f && jumpCount < maxJump)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
             jumpCount++;
+            if ((IsGrounded() && !IsSwimming()) || (!IsSwimming() && IsWalled()))
+                FindObjectOfType<AudioManager>().OneShot("Jump");
         }
 
         if (IsGrounded())
@@ -58,7 +66,18 @@ public class PlayerMovement : MonoBehaviour
         if (!isWallJumping)
         {
             rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+            stepCoolDown -= Time.deltaTime;
+            if (horizontal != 0 && IsGrounded() && !IsWalled() && !IsSwimming() && stepCoolDown < 0f)
+            {
+                FindObjectOfType<AudioManager>().OneShot("Footstep");
+                stepCoolDown = stepRate;
+            }
         }
+    }
+
+    private bool IsSwimming()
+    {
+        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, waterLayer);
     }
 
     private bool IsGrounded()

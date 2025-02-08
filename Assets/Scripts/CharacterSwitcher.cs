@@ -37,7 +37,8 @@ public class CharacterSwitcher : MonoBehaviour
             currentCharacterIndex = (currentCharacterIndex + 1) % characters.Length;
         }
         while (characters[currentCharacterIndex].tag == "Locked" && currentCharacterIndex != startIndex);
-
+        if (characters[currentCharacterIndex].tag != "Locked" && currentCharacterIndex != startIndex)
+            FindObjectOfType<AudioManager>().Play("Whoosh");
         for (int i = 0; i < characters.Length; i++)
         {
             characters[i].SetActive(i == currentCharacterIndex);
@@ -56,5 +57,17 @@ public class CharacterSwitcher : MonoBehaviour
             //demeter.SetActive(true);
             demeter.tag = "Player";
         }
+    }
+
+    public void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.CompareTag("Water"))
+            FindObjectOfType<AudioManager>().Play("Water1");
+    }
+
+    public void OnTriggerExit2D(Collider2D collider)
+    {
+        if (collider.CompareTag("Water"))
+            FindObjectOfType<AudioManager>().Play("Water2");
     }
 }
