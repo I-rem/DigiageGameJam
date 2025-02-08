@@ -29,24 +29,34 @@ public class PlayerMovement : MonoBehaviour
     public float stepRate = 0.5f;
     public float stepCoolDown;
 
+    public ParticleSystem dust;
+
     private void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
 
         if (Input.GetButtonDown("Jump") && jumpCount < maxJump)
         {
+            if ((IsGrounded() && !IsSwimming()) || (!IsSwimming() && IsWalled()))
+            {
+                FindObjectOfType<AudioManager>().OneShot("Jump");
+                dust.Play();
+            }
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
             jumpCount++;
-            if ((IsGrounded() && !IsSwimming()) || (!IsSwimming() && IsWalled()))
-                FindObjectOfType<AudioManager>().OneShot("Jump");
+            
         }
 
         if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f && jumpCount < maxJump)
         {
+            if ((IsGrounded() && !IsSwimming()) || (!IsSwimming() && IsWalled()))
+            {
+                FindObjectOfType<AudioManager>().OneShot("Jump");
+                dust.Play();
+            }
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
             jumpCount++;
-            if ((IsGrounded() && !IsSwimming()) || (!IsSwimming() && IsWalled()))
-                FindObjectOfType<AudioManager>().OneShot("Jump");
+            
         }
 
         if (IsGrounded())

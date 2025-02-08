@@ -9,6 +9,8 @@ public class CharacterSwitcher : MonoBehaviour
     private GameObject[] characters;
     private int currentCharacterIndex = 0;
 
+    public ParticleSystem[] dust;
+
     void Start()
     {
         characters = new GameObject[] { hades, poseidon, demeter };
@@ -38,7 +40,10 @@ public class CharacterSwitcher : MonoBehaviour
         }
         while (characters[currentCharacterIndex].tag == "Locked" && currentCharacterIndex != startIndex);
         if (characters[currentCharacterIndex].tag != "Locked" && currentCharacterIndex != startIndex)
+        {
             FindObjectOfType<AudioManager>().Play("Whoosh");
+            dust[currentCharacterIndex].Play();
+        }
         for (int i = 0; i < characters.Length; i++)
         {
             characters[i].SetActive(i == currentCharacterIndex);
