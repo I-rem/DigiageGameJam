@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Posedion
+  - Demeter
+  - Locked
   layers:
   - Default
   - TransparentFX
