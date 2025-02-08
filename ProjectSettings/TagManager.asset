@@ -8,6 +8,7 @@ TagManager:
   - Posedion
   - Demeter
   - Locked
+  - Poseidon
   layers:
   - Default
   - TransparentFX

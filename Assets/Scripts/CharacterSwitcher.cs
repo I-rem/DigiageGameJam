@@ -48,12 +48,12 @@ public class CharacterSwitcher : MonoBehaviour
     {
         if (characterName == "Poseidon")
         {
-            poseidon.SetActive(true);
+            //poseidon.SetActive(true);
             poseidon.tag = "Player"; 
         }
         else if (characterName == "Demeter")
         {
-            demeter.SetActive(true);
+            //demeter.SetActive(true);
             demeter.tag = "Player";
         }
     }
