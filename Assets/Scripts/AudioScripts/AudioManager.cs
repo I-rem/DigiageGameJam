@@ -44,7 +44,10 @@ public class AudioManager : MonoBehaviour
 		{
 			s2 = Array.Find(sounds, item => item.name == "Opening");
 			s3 = Array.Find(sounds, item => item.name == "Campfire");
-			
+			if (s3 != null)
+				Play("Campfire");
+			if (s2 != null)
+				OneShot("Opening");
 		}
 
 	}
