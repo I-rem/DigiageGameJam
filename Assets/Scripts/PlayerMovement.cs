@@ -29,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
     public float stepRate = 0.5f;
     public float stepCoolDown;
 
+    public Animator[] animator;
+
     public ParticleSystem dust;
 
     private void Update()
@@ -81,8 +83,16 @@ public class PlayerMovement : MonoBehaviour
             {
                 FindObjectOfType<AudioManager>().OneShot("Footstep");
                 stepCoolDown = stepRate;
+                for (int i=0;i<3;i++)
+                    animator[i].SetFloat("Speed", 1);
             }
+            else
+                for (int i=0;i<3;i++)
+                    animator[i].SetFloat("Speed", -1);
         }
+        //else
+         //   for (int i=0;i<3;i++)
+          //          animator[i].SetFloat("Speed", -1);
     }
 
     private bool IsSwimming()
