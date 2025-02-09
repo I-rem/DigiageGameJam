@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AppearOnTrigger : MonoBehaviour
 {
@@ -12,5 +13,7 @@ public class AppearOnTrigger : MonoBehaviour
         thing.SetActive(true);
         if (collider.tag == "Player" && type == 1)
             FindObjectOfType<CharacterSwitcher>().Die();
+        if (collider.tag == "Player" && type == 2)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

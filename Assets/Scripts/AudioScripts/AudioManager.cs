@@ -32,8 +32,21 @@ public class AudioManager : MonoBehaviour
 			s.source.outputAudioMixerGroup = mixerGroup;
 		}
 		Sound s2 = Array.Find(sounds, item => item.name == "Ambience");
+		Sound s3 = Array.Find(sounds, item => item.name == "Final");
+		
 		if (s2 != null)
 			Play("Ambience");
+		else if (s3 != null)
+		{
+			Play("Final");
+		}
+		else
+		{
+			s2 = Array.Find(sounds, item => item.name == "Opening");
+			s3 = Array.Find(sounds, item => item.name == "Campfire");
+			
+		}
+
 	}
 
 	public void Play(string sound)
