@@ -84,8 +84,11 @@ public class PlayerMovement : MonoBehaviour
                 FindObjectOfType<AudioManager>().OneShot("Footstep");
                 stepCoolDown = stepRate;
                 for (int i=0;i<3;i++)
-                    animator[i].SetFloat("Speed", 1);
+                        animator[i].SetFloat("Speed", 1);
             }
+            else if (horizontal != 0 && IsGrounded() && !IsWalled() && !IsSwimming())
+                for (int i=0;i<3;i++)
+                        animator[i].SetFloat("Speed", 1);
             else
                 for (int i=0;i<3;i++)
                     animator[i].SetFloat("Speed", -1);
