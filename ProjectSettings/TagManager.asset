@@ -9,6 +9,7 @@ TagManager:
   - Locked
   - Poseidon
   - Water
+  - Checkpoint
   layers:
   - Default
   - TransparentFX

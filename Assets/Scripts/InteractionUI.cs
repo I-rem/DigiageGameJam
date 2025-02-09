@@ -5,6 +5,8 @@ using UnityEngine;
 public class InteractionUI : MonoBehaviour
 {
     public GameObject InteractionText;
+    public GameObject hades;
+
     private bool interactable = false;
 
     void Update()
@@ -16,6 +18,8 @@ public class InteractionUI : MonoBehaviour
                 FindObjectOfType<CharacterSwitcher>().UnlockCharacter("Poseidon");
             else
                 FindObjectOfType<CharacterSwitcher>().UnlockCharacter("Demeter");
+            FindObjectOfType<AudioManager>().Play("Heroic");
+            FindObjectOfType<AudioManager>().Play("Explosion");
             Destroy(gameObject);
         }
     }
@@ -25,9 +29,11 @@ public class InteractionUI : MonoBehaviour
         Debug.Log("Trigger Enter");
         Debug.Log(other.tag);
 
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && hades.activeSelf == true)
+        {
             InteractionText.SetActive(true);
-        interactable = true;
+            interactable = true;
+        }
     }
 
     public void OnTriggerExit2D(Collider2D other)

@@ -11,6 +11,8 @@ public class CharacterSwitcher : MonoBehaviour
 
     public ParticleSystem[] dust;
 
+    private Vector2 respawnPoint;
+
     void Start()
     {
         characters = new GameObject[] { hades, poseidon, demeter };
@@ -21,6 +23,8 @@ public class CharacterSwitcher : MonoBehaviour
 
         poseidon.tag = "Locked";
         demeter.tag = "Locked";
+
+        respawnPoint = transform.position;
     }
 
     void Update()
@@ -67,12 +71,25 @@ public class CharacterSwitcher : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.CompareTag("Water"))
+        {
             FindObjectOfType<AudioManager>().Play("Water1");
+            if (currentCharacterIndex != 1)
+                Die();
+        }
+        if (collider.CompareTag("Checkpoint"))
+            respawnPoint = collider.transform.position;
+
     }
 
     public void OnTriggerExit2D(Collider2D collider)
     {
         if (collider.CompareTag("Water"))
             FindObjectOfType<AudioManager>().Play("Water2");
+    }
+
+    public void Die()
+    {
+        FindObjectOfType<AudioManager>().OneShot("Killed");
+        transform.position = respawnPoint;
     }
 }
